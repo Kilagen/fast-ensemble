@@ -5,23 +5,11 @@ import pandas as pd
 
 
 def to_pandas(X: Any) -> pd.DataFrame:
-    dtype = type(X)
-
-    if dtype == pd.DataFrame:
-        return X
-
-    elif dtype == pd.Series:
+    try:
         return pd.DataFrame(X)
-
-    elif dtype == np.ndarray:
-        return pd.DataFrame(X)
-
-    elif dtype == list:
-        return pd.DataFrame(X)
-
-    else:
+    except ValueError:
         raise ValueError(
-            f"Wrong dtype. Expected pd.DataFrame, pd.Series, np.ndarray or list, found {dtype}"
+            "Wrong dtype. Expected ndarray (structured or homogeneous), Iterable, dict, or DataFrame, found {}".format(type(X))
         )
 
 
